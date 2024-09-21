@@ -1,17 +1,21 @@
 package com.example;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
+@Slf4j
 public class WebController {
 
     @GetMapping("/profile")
     public String profile(Model model){
+        log.info("request = "+ new Date());
         // Tạo ra thông tin
         List<Info> profile = new ArrayList<>();
         profile.add(new Info("fullname", "Nguyễn Hoàng Nam"));
