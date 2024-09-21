@@ -33,6 +33,7 @@ public class WebController {
 // representation of a date with the defined format.
         String todayAsString = df.format(today);
         profile.add(new Info("Date", todayAsString));
+        profile.add(new Info("subnamer", "check_"+todayAsString));
         profile.add(new Info("fullname", "Nguyễn Hoàng Nam"));
         profile.add(new Info("nickname", "lốddaf"));
         profile.add(new Info("gmail", "loda.namnh@gmail.com"));
