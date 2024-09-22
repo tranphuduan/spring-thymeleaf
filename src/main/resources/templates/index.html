@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catalog-Z Bootstrap 5.0 HTML Template</title>
+  <title>Hệ thống bán hàng</title>
   <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
   <link rel="stylesheet" th:href="@{/fontawesome/css/all.min.css}">
   <link rel="stylesheet" th:href="@{/css/templatemo-style.css}">
@@ -20,14 +20,23 @@
 <!-- Import Header -->
 <div th:insert="fragments/header :: header"></div>
 
+<div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" th:data-image-src="@{/img/hero.jpg}">
+  <form class="d-flex tm-search-form">
+    <input class="form-control tm-search-input" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success tm-search-btn" type="submit">
+      <i class="fas fa-search"></i>
+    </button>
+  </form>
+</div>
+
 <div class="container-fluid tm-container-content tm-mt-60">
   <div class="row mb-4">
     <h2 class="col-6 tm-text-primary">
-      Latest Photos
+      <a th:text="'Tổng: ' + ${searchResponse.totalData}"></a>
     </h2>
     <div class="col-6 d-flex justify-content-end align-items-center">
       <form action="" class="tm-text-primary">
-        Page <input type="text" value="1" size="1" class="tm-input-paging tm-text-primary"> of 200
+        Số lượng hiển thị <input type="text" value="1" size="1" class="tm-input-paging tm-text-primary">
       </form>
     </div>
   </div>
@@ -59,10 +68,24 @@
          href="javascript:void(0);" class="btn btn-primary tm-btn-prev mb-2 disabled">Previous</a>
 
       <div class="tm-paging d-flex">
-        <a th:each="i : ${#numbers.sequence(0, searchResponse.totalData / searchResponse.pageSize-1)}"
+        <a th:if="${searchResponse.pageIndex > 0}"
+           th:href="@{/(pageIndex=0, pageSize=${searchResponse.pageSize})}"
+           class="tm-paging-link">1</a>
+
+        <span th:if="${searchResponse.pageIndex > 1}" class="tm-paging-link">...</span>
+
+        <a th:each="i : ${#numbers.sequence(searchResponse.pageIndex - 1, searchResponse.pageIndex + 1)}"
+           th:if="${i >= 0 && i < (searchResponse.totalData / searchResponse.pageSize + (searchResponse.totalData % searchResponse.pageSize > 0 ? 1 : 0))}"
            th:classappend="${i == searchResponse.pageIndex} ? 'active tm-paging-link' : 'tm-paging-link'"
            th:href="@{/(pageIndex=${i}, pageSize=${searchResponse.pageSize})}"
-           th:text="${i + 1}">1</a>
+           th:text="${i + 1}"></a>
+
+        <span th:if="${searchResponse.pageIndex < (searchResponse.totalData / searchResponse.pageSize - 1)}" class="tm-paging-link">...</span>
+
+        <a th:if="${searchResponse.pageIndex < (searchResponse.totalData / searchResponse.pageSize - 1)}"
+           th:href="@{/(pageIndex=${(searchResponse.totalData / searchResponse.pageSize) - 1}, pageSize=${searchResponse.pageSize})}"
+           class="tm-paging-link"
+           th:text="${(searchResponse.totalData / searchResponse.pageSize) + (searchResponse.totalData % searchResponse.pageSize > 0 ? 1 : 0)}"></a>
       </div>
 
       <a th:if="${(searchResponse.pageIndex + 1) * searchResponse.pageSize < searchResponse.totalData}"
@@ -72,6 +95,14 @@
          href="javascript:void(0);" class="btn btn-primary tm-btn-next disabled">Next Page</a>
     </div>
   </div>
+
+
+
+
+
+</div>
+
+
 
 
 </div> <!-- container-fluid, tm-container-content -->
