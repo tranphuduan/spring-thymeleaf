@@ -167,7 +167,7 @@ a:hover { color:#009999; }
 
 .btn-primary.disabled, 
 .btn-primary:disabled {
-    background-color: #009999;
+    background-color: #817575;
     pointer-events: all;
     cursor: not-allowed;
 }
