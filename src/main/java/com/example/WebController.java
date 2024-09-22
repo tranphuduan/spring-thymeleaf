@@ -14,7 +14,9 @@ import java.util.List;
 public class WebController {
 
     @GetMapping("/")
-    public String showIndex(Model model, @RequestParam(defaultValue = "0") Integer pageIndex, @RequestParam(defaultValue = "2") Integer pageSize) {
+    public String showIndex(Model model, @RequestParam(defaultValue = "0") Integer pageIndex
+            , @RequestParam(defaultValue = "2") Integer pageSize,
+                            @RequestParam(name = "search",required = false) String search) {
 
         List<IndexInfo> indexInfoList = getListData();
         List<IndexInfo> indexInfo = new ArrayList<>();
@@ -31,6 +33,7 @@ public class WebController {
 
 
         model.addAttribute("searchResponse", response);
+        model.addAttribute("search", search==null?"":search);
         return "index"; // Return the name of the Thymeleaf template (index.html)
     }
 

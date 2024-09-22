@@ -21,24 +21,25 @@
 <div th:insert="fragments/header :: header"></div>
 
 <div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" th:data-image-src="@{/img/hero.jpg}">
-  <form class="d-flex tm-search-form">
-    <input class="form-control tm-search-input" type="search" placeholder="Search" aria-label="Search">
+  <form class="d-flex tm-search-form" method="get" action="@{/search}">
+    <input class="form-control tm-search-input" type="search" placeholder="Search" aria-label="Search" th:value="${search}">
     <button class="btn btn-outline-success tm-search-btn" type="submit">
       <i class="fas fa-search"></i>
     </button>
   </form>
 </div>
 
+
 <div class="container-fluid tm-container-content tm-mt-60">
   <div class="row mb-4">
     <h2 class="col-6 tm-text-primary">
       <a th:text="'Tổng: ' + ${searchResponse.totalData}"></a>
     </h2>
-    <div class="col-6 d-flex justify-content-end align-items-center">
-      <form action="" class="tm-text-primary">
-        Số lượng hiển thị <input type="text" value="1" size="1" class="tm-input-paging tm-text-primary">
-      </form>
-    </div>
+<!--    <div class="col-6 d-flex justify-content-end align-items-center">-->
+<!--      <form action="" class="tm-text-primary">-->
+<!--        Số lượng hiển thị <input type="text" value="1" size="1" class="tm-input-paging tm-text-primary">-->
+<!--      </form>-->
+<!--    </div>-->
   </div>
 
   <div class="row tm-mb-90 tm-gallery">
@@ -61,40 +62,57 @@
 
   <div class="row tm-mb-90">
     <div class="col-12 d-flex justify-content-between align-items-center tm-paging-col">
+      <!-- Nút Previous -->
       <a th:if="${searchResponse.pageIndex > 0}"
-         th:href="@{/(pageIndex=${searchResponse.pageIndex - 1}, pageSize=${searchResponse.pageSize})}"
+         href="javascript:void(0);"
+         th:onclick="'loadPage(' + (${searchResponse.pageIndex - 1}) + ',' + ${searchResponse.pageSize} + ');'"
          class="btn btn-primary tm-btn-prev mb-2">Previous</a>
+
       <a th:if="${searchResponse.pageIndex == 0}"
          href="javascript:void(0);" class="btn btn-primary tm-btn-prev mb-2 disabled">Previous</a>
 
+      <!-- Phân trang -->
       <div class="tm-paging d-flex">
+        <!-- Trang đầu tiên -->
         <a th:if="${searchResponse.pageIndex > 0}"
-           th:href="@{/(pageIndex=0, pageSize=${searchResponse.pageSize})}"
+           href="javascript:void(0);"
+           th:onclick="'loadPage(0,' + ${searchResponse.pageSize} + ');'"
            class="tm-paging-link">1</a>
 
+        <!-- Dấu ba chấm -->
         <span th:if="${searchResponse.pageIndex > 1}" class="tm-paging-link">...</span>
 
+        <!-- Các nút trang hiện tại -->
         <a th:each="i : ${#numbers.sequence(searchResponse.pageIndex - 1, searchResponse.pageIndex + 1)}"
            th:if="${i >= 0 && i < (searchResponse.totalData / searchResponse.pageSize + (searchResponse.totalData % searchResponse.pageSize > 0 ? 1 : 0))}"
            th:classappend="${i == searchResponse.pageIndex} ? 'active tm-paging-link' : 'tm-paging-link'"
-           th:href="@{/(pageIndex=${i}, pageSize=${searchResponse.pageSize})}"
+           href="javascript:void(0);"
+           th:onclick="'loadPage(' + ${i} + ',' + ${searchResponse.pageSize} + ');'"
            th:text="${i + 1}"></a>
 
+        <!-- Dấu ba chấm -->
         <span th:if="${searchResponse.pageIndex < (searchResponse.totalData / searchResponse.pageSize - 1)}" class="tm-paging-link">...</span>
 
+        <!-- Trang cuối -->
         <a th:if="${searchResponse.pageIndex < (searchResponse.totalData / searchResponse.pageSize - 1)}"
-           th:href="@{/(pageIndex=${(searchResponse.totalData / searchResponse.pageSize) - 1}, pageSize=${searchResponse.pageSize})}"
+           href="javascript:void(0);"
+           th:onclick="'loadPage(' + (${searchResponse.totalData / searchResponse.pageSize - 1}) + ',' + ${searchResponse.pageSize} + ');'"
            class="tm-paging-link"
            th:text="${(searchResponse.totalData / searchResponse.pageSize) + (searchResponse.totalData % searchResponse.pageSize > 0 ? 1 : 0)}"></a>
       </div>
 
+      <!-- Nút Next -->
       <a th:if="${(searchResponse.pageIndex + 1) * searchResponse.pageSize < searchResponse.totalData}"
-         th:href="@{/(pageIndex=${searchResponse.pageIndex + 1}, pageSize=${searchResponse.pageSize})}"
+         href="javascript:void(0);"
+         th:onclick="'loadPage(' + (${searchResponse.pageIndex + 1}) + ',' + ${searchResponse.pageSize} + ');'"
          class="btn btn-primary tm-btn-next">Next Page</a>
+
       <a th:if="${(searchResponse.pageIndex + 1) * searchResponse.pageSize >= searchResponse.totalData}"
          href="javascript:void(0);" class="btn btn-primary tm-btn-next disabled">Next Page</a>
     </div>
   </div>
+
+
 
 
 
@@ -115,5 +133,26 @@
     $('body').addClass('loaded');
   });
 </script>
+
+<script type="text/javascript">
+  function getSearchValue() {
+    // Lấy giá trị từ ô tìm kiếm
+    return document.getElementById('searchInput').value;
+  }
+
+  function loadPage(pageIndex, pageSize) {
+    var searchValue = getSearchValue(); // Lấy giá trị tìm kiếm hiện tại
+    var url = `?pageIndex=${pageIndex}&pageSize=${pageSize}&search=${encodeURIComponent(searchValue)}`;
+    window.location.href = url; // Điều hướng đến URL với các tham số
+  }
+
+  function searchSubmit() {
+    var searchValue = getSearchValue();
+    var url = `?pageIndex=0&pageSize=${searchResponse.pageSize}&search=${encodeURIComponent(searchValue)}`;
+    window.location.href = url;
+    return false; // Ngăn chặn form submit mặc định
+  }
+</script>
+
 </body>
 </html>
