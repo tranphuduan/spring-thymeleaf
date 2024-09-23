@@ -34,6 +34,7 @@ public class WebController {
 
         model.addAttribute("searchResponse", response);
         model.addAttribute("search", search==null?"":search);
+
         return "index"; // Return the name of the Thymeleaf template (index.html)
     }
 

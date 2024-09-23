@@ -21,13 +21,16 @@
 <div th:insert="fragments/header :: header"></div>
 
 <div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" th:data-image-src="@{/img/hero.jpg}">
-  <form class="d-flex tm-search-form" method="get" action="@{/search}">
-    <input class="form-control tm-search-input" type="search" placeholder="Search" aria-label="Search" th:value="${search}">
+  <form class="d-flex tm-search-form" onsubmit="return searchSubmit();">
+    <input id="searchInput" class="form-control tm-search-input" type="search" placeholder="Search"
+           aria-label="Search" th:value="${search != null ? search : ''}">
     <button class="btn btn-outline-success tm-search-btn" type="submit">
       <i class="fas fa-search"></i>
     </button>
   </form>
 </div>
+
+
 
 
 <div class="container-fluid tm-container-content tm-mt-60">
@@ -118,6 +121,9 @@
 
 
 
+
+
+
 </div>
 
 
@@ -148,11 +154,12 @@
 
   function searchSubmit() {
     var searchValue = getSearchValue();
-    var url = `?pageIndex=0&pageSize=${searchResponse.pageSize}&search=${encodeURIComponent(searchValue)}`;
+    var url = `?pageIndex=0&pageSize=10&search=${encodeURIComponent(searchValue)}`;
     window.location.href = url;
     return false; // Ngăn chặn form submit mặc định
   }
 </script>
+
 
 </body>
 </html>
