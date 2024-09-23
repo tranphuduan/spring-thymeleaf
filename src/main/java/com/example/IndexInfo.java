@@ -8,12 +8,14 @@ import lombok.Data;
  */
 @Data
 public class IndexInfo {
+    String id;
     String imageName;
     String title;
     String time;
     String views;
 
-    public IndexInfo(String imageName, String title, String time, String views) {
+    public IndexInfo(String id,String imageName, String title, String time, String views) {
+        this.id=id;
         this.imageName = imageName;
         this.title = title;
         this.time = time;
