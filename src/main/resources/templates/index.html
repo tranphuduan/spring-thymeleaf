@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hệ thống bán hàng</title>
-  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-  <link rel="stylesheet" th:href="@{/fontawesome/css/all.min.css}">
-  <link rel="stylesheet" th:href="@{/css/templatemo-style.css}">
-  <!--
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ thống bán hàng</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/fontawesome/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/css/templatemo-style.css}">
+    <!--
 
-  TemplateMo 556 Catalog-Z
+    TemplateMo 556 Catalog-Z
 
-  https://templatemo.com/tm-556-catalog-z
+    https://templatemo.com/tm-556-catalog-z
 
-  -->
+    -->
 </head>
 <body>
 
@@ -21,112 +21,100 @@
 <div th:insert="fragments/header :: header"></div>
 
 <div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" th:data-image-src="@{/img/hero.jpg}">
-  <form class="d-flex tm-search-form" onsubmit="return searchSubmit();">
-    <input id="searchInput" class="form-control tm-search-input" type="search" placeholder="Search"
-           aria-label="Search" th:value="${search != null ? search : ''}">
-    <button class="btn btn-outline-success tm-search-btn" type="submit">
-      <i class="fas fa-search"></i>
-    </button>
-  </form>
+    <form class="d-flex tm-search-form" onsubmit="return searchSubmit();">
+        <input id="searchInput" class="form-control tm-search-input" type="search" placeholder="Search"
+               aria-label="Search" th:value="${search != null ? search : ''}">
+        <button class="btn btn-outline-success tm-search-btn" type="submit">
+            <i class="fas fa-search"></i>
+        </button>
+    </form>
 </div>
-
-
 
 
 <div class="container-fluid tm-container-content tm-mt-60">
-  <div class="row mb-4">
-    <h2 class="col-6 tm-text-primary">
-      <a th:text="'Tổng: ' + ${searchResponse.totalData}"></a>
-    </h2>
-<!--    <div class="col-6 d-flex justify-content-end align-items-center">-->
-<!--      <form action="" class="tm-text-primary">-->
-<!--        Số lượng hiển thị <input type="text" value="1" size="1" class="tm-input-paging tm-text-primary">-->
-<!--      </form>-->
-<!--    </div>-->
-  </div>
-
-  <div class="row tm-mb-90 tm-gallery">
-    <div th:each="info : ${searchResponse.info}" class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-      <figure class="effect-ming tm-video-item">
-        <img th:src="@{/img/{imageName}(imageName=${info.imageName})}" alt="Image" class="img-fluid">
-        <figcaption class="d-flex align-items-center justify-content-center">
-          <h2 th:text="${info.title}">Title</h2>
-          <a href="photo-detail.html">View more</a>
-        </figcaption>
-      </figure>
-      <div class="d-flex justify-content-between tm-text-gray">
-        <span class="tm-text-gray-light" th:text="${info.time}">Time</span>
-        <span th:text="${info.views}">Views</span>
-      </div>
+    <div class="row mb-4">
+        <h2 class="col-6 tm-text-primary">
+            <a th:text="'Tổng: ' + ${searchResponse.totalData}"></a>
+        </h2>
+        <!--    <div class="col-6 d-flex justify-content-end align-items-center">-->
+        <!--      <form action="" class="tm-text-primary">-->
+        <!--        Số lượng hiển thị <input type="text" value="1" size="1" class="tm-input-paging tm-text-primary">-->
+        <!--      </form>-->
+        <!--    </div>-->
     </div>
 
-  </div> <!-- row -->
+    <div class="row tm-mb-90 tm-gallery">
+        <div th:each="info : ${searchResponse.info}" class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
+            <figure class="effect-ming tm-video-item">
+                <img th:src="@{/img/{imageName}(imageName=${info.imageName})}" alt="Image" class="img-fluid">
+                <figcaption class="d-flex align-items-center justify-content-center">
+                    <h2 th:text="${info.title}">Title</h2>
+                    <a href="photo-detail.html">View more</a>
+                </figcaption>
+            </figure>
+            <div class="d-flex justify-content-between tm-text-gray">
+                <span class="tm-text-gray-light" th:text="${info.time}">Time</span>
+                <span th:text="${info.views}">Views</span>
+            </div>
+        </div>
+
+    </div> <!-- row -->
 
 
-  <div class="row tm-mb-90">
-    <div class="col-12 d-flex justify-content-between align-items-center tm-paging-col">
-      <!-- Nút Previous -->
-      <a th:if="${searchResponse.pageIndex > 0}"
-         href="javascript:void(0);"
-         th:onclick="'loadPage(' + (${searchResponse.pageIndex - 1}) + ',' + ${searchResponse.pageSize} + ');'"
-         class="btn btn-primary tm-btn-prev mb-2">Previous</a>
+    <div class="row tm-mb-90">
+        <div class="col-12 d-flex justify-content-between align-items-center tm-paging-col">
+            <!-- Nút Previous -->
+            <a th:if="${searchResponse.pageIndex > 0}"
+               href="javascript:void(0);"
+               th:onclick="'loadPage(' + (${searchResponse.pageIndex - 1}) + ',' + ${searchResponse.pageSize} + ');'"
+               class="btn btn-primary tm-btn-prev mb-2">Previous</a>
 
-      <a th:if="${searchResponse.pageIndex == 0}"
-         href="javascript:void(0);" class="btn btn-primary tm-btn-prev mb-2 disabled">Previous</a>
+            <a th:if="${searchResponse.pageIndex == 0}"
+               href="javascript:void(0);" class="btn btn-primary tm-btn-prev mb-2 disabled">Previous</a>
 
-      <!-- Phân trang -->
-      <div class="tm-paging d-flex">
-        <!-- Trang đầu tiên -->
-        <a th:if="${searchResponse.pageIndex > 1}"
-           href="javascript:void(0);"
-           th:onclick="'loadPage(0,' + ${searchResponse.pageSize} + ');'"
-           class="tm-paging-link">1</a>
+            <!-- Phân trang -->
+            <div class="tm-paging d-flex">
+                <!-- Trang đầu tiên -->
+                <a th:if="${searchResponse.pageIndex > 1}"
+                   href="javascript:void(0);"
+                   th:onclick="'loadPage(0,' + ${searchResponse.pageSize} + ');'"
+                   class="tm-paging-link">1</a>
 
-        <!-- Dấu ba chấm -->
-        <span th:if="${searchResponse.pageIndex > 1}" class="tm-paging-link">...</span>
+                <!-- Dấu ba chấm -->
+                <span th:if="${searchResponse.pageIndex > 1 && searchResponse.totalPage>3}" class="tm-paging-link">...</span>
 
-        <!-- Các nút trang hiện tại -->
-        <a th:each="i : ${#numbers.sequence(searchResponse.pageIndex - 1, searchResponse.pageIndex + 1)}"
-           th:if="${i >= 0 && i < (searchResponse.totalData / searchResponse.pageSize + (searchResponse.totalData % searchResponse.pageSize > 0 ? 1 : 0))}"
-           th:classappend="${i == searchResponse.pageIndex} ? 'active tm-paging-link' : 'tm-paging-link'"
-           href="javascript:void(0);"
-           th:onclick="'loadPage(' + ${i} + ',' + ${searchResponse.pageSize} + ');'"
-           th:text="${i + 1}"></a>
+                <!-- Các nút trang hiện tại -->
+                <a th:each="i : ${#numbers.sequence(searchResponse.pageIndex - 1, searchResponse.pageIndex + 1)}"
+                   th:if="${i >= 0 && i < searchResponse.totalPage}"
+                   th:classappend="${i == searchResponse.pageIndex} ? 'active tm-paging-link' : 'tm-paging-link'"
+                   href="javascript:void(0);"
+                   th:onclick="'loadPage(' + ${i} + ',' + ${searchResponse.pageSize} + ');'"
+                   th:text="${i + 1}"></a>
 
-        <!-- Dấu ba chấm -->
-        <span th:if="${searchResponse.pageIndex < (searchResponse.totalData / searchResponse.pageSize - 3)}" class="tm-paging-link">...</span>
+                <!-- Dấu ba chấm -->
+                <span th:if="${searchResponse.pageIndex < (searchResponse.totalData / searchResponse.pageSize - 3)}" class="tm-paging-link">...</span>
 
-        <!-- Trang cuối -->
-        <a th:if="${searchResponse.pageIndex < (searchResponse.totalData / searchResponse.pageSize - 2)}"
-           href="javascript:void(0);"
-           th:onclick="'loadPage(' + (${searchResponse.totalData / searchResponse.pageSize - 1}) + ',' + ${searchResponse.pageSize} + ');'"
-           class="tm-paging-link"
-           th:text="${(searchResponse.totalData / searchResponse.pageSize) + (searchResponse.totalData % searchResponse.pageSize > 0 ? 1 : 0)}"></a>
-      </div>
+                <!-- Trang cuối -->
+                <a th:if="${(searchResponse.pageIndex < (searchResponse.totalData / searchResponse.pageSize - 2))||(searchResponse.totalPage ==3 && searchResponse.pageIndex==0)}"
+                   href="javascript:void(0);"
+                   th:onclick="'loadPage(' + (${searchResponse.totalData / searchResponse.pageSize - 1}) + ',' + ${searchResponse.pageSize} + ');'"
+                   class="tm-paging-link"
+                   th:text="${(searchResponse.totalData / searchResponse.pageSize) + (searchResponse.totalData % searchResponse.pageSize > 0 ? 1 : 0)}"></a>
+            </div>
 
-      <!-- Nút Next -->
-      <a th:if="${(searchResponse.pageIndex + 1) * searchResponse.pageSize < searchResponse.totalData}"
-         href="javascript:void(0);"
-         th:onclick="'loadPage(' + (${searchResponse.pageIndex + 1}) + ',' + ${searchResponse.pageSize} + ');'"
-         class="btn btn-primary tm-btn-next">Next Page</a>
+            <!-- Nút Next -->
+            <a th:if="${(searchResponse.pageIndex + 1) * searchResponse.pageSize < searchResponse.totalData}"
+               href="javascript:void(0);"
+               th:onclick="'loadPage(' + (${searchResponse.pageIndex + 1}) + ',' + ${searchResponse.pageSize} + ');'"
+               class="btn btn-primary tm-btn-next">Next Page</a>
 
-      <a th:if="${(searchResponse.pageIndex + 1) * searchResponse.pageSize >= searchResponse.totalData}"
-         href="javascript:void(0);" class="btn btn-primary tm-btn-next disabled">Next Page</a>
+            <a th:if="${(searchResponse.pageIndex + 1) * searchResponse.pageSize >= searchResponse.totalData}"
+               href="javascript:void(0);" class="btn btn-primary tm-btn-next disabled">Next Page</a>
+        </div>
     </div>
-  </div>
-
-
-
-
-
-
-
-
 
 
 </div>
-
-
 
 
 </div> <!-- container-fluid, tm-container-content -->
@@ -135,29 +123,29 @@
 <div th:insert="fragments/footer :: footer"></div>
 <script src="js/plugins.js"></script>
 <script>
-  $(window).on("load", function() {
-    $('body').addClass('loaded');
-  });
+    $(window).on("load", function () {
+        $('body').addClass('loaded');
+    });
 </script>
 
 <script type="text/javascript">
-  function getSearchValue() {
-    // Lấy giá trị từ ô tìm kiếm
-    return document.getElementById('searchInput').value;
-  }
+    function getSearchValue() {
+        // Lấy giá trị từ ô tìm kiếm
+        return document.getElementById('searchInput').value;
+    }
 
-  function loadPage(pageIndex, pageSize) {
-    var searchValue = getSearchValue(); // Lấy giá trị tìm kiếm hiện tại
-    var url = `?pageIndex=${pageIndex}&pageSize=${pageSize}&search=${encodeURIComponent(searchValue)}`;
-    window.location.href = url; // Điều hướng đến URL với các tham số
-  }
+    function loadPage(pageIndex, pageSize) {
+        var searchValue = getSearchValue(); // Lấy giá trị tìm kiếm hiện tại
+        var url = `?pageIndex=${pageIndex}&pageSize=${pageSize}&search=${encodeURIComponent(searchValue)}`;
+        window.location.href = url; // Điều hướng đến URL với các tham số
+    }
 
-  function searchSubmit() {
-    var searchValue = getSearchValue();
-    var url = `?pageIndex=0&pageSize=10&search=${encodeURIComponent(searchValue)}`;
-    window.location.href = url;
-    return false; // Ngăn chặn form submit mặc định
-  }
+    function searchSubmit() {
+        var searchValue = getSearchValue();
+        var url = `?pageIndex=0&pageSize=10&search=${encodeURIComponent(searchValue)}`;
+        window.location.href = url;
+        return false; // Ngăn chặn form submit mặc định
+    }
 </script>
 
 
