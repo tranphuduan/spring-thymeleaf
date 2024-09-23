@@ -14,6 +14,7 @@ public class SearchResponse {
     Integer totalData;
     Integer pageIndex;
     Integer pageSize;
+    Integer totalPage;
     List<IndexInfo> info;
 
 

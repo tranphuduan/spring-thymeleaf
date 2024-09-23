@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @Slf4j
@@ -19,15 +20,25 @@ public class WebController {
                             @RequestParam(name = "search",required = false) String search) {
 
         List<IndexInfo> indexInfoList = getListData();
+        List<IndexInfo> searchList = getListData();
+
+        if (search!=null && !search.trim().equals("")){
+            searchList = indexInfoList.stream().filter(x->x.getTitle().equalsIgnoreCase(search.trim())).collect(Collectors.toList());
+        }
         List<IndexInfo> indexInfo = new ArrayList<>();
         int start = pageIndex * pageSize;
-        int end = Math.min((pageIndex + 1) * pageSize,indexInfoList.size());
+        int end = Math.min((pageIndex + 1) * pageSize,searchList.size());
         for (int i = start; i < end; i++) {
-            indexInfo.add(indexInfoList.get(i));
+            indexInfo.add(searchList.get(i));
+        }
+        int totalPage = searchList.size()/pageSize;
+        if (searchList.size()%pageSize!=0){
+            totalPage+=1;
         }
         SearchResponse response = new SearchResponse()
-                .setTotalData(indexInfoList.size())
+                .setTotalData(searchList.size())
                 .setPageIndex(pageIndex)
+                .setTotalPage(totalPage)
                 .setPageSize(pageSize)
                 .setInfo(indexInfo);
 
