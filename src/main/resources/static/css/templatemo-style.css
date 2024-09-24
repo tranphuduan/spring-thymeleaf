@@ -626,3 +626,55 @@ select:not([multiple]) {
 
     .tm-social-links li { margin-right: 3px; }
 }
+
+/* Khung chứa biểu tượng */
+.chat-box {
+    position: fixed; /* Vị trí cố định */
+    bottom: 20px; /* Căn dưới cùng */
+    right: 20px; /* Căn phải */
+    background-color: transparent; /* Làm cho nền trong suốt */
+    border: none;
+    padding: 10px;
+    display: flex;
+    flex-direction: column; /* Hiển thị biểu tượng theo chiều dọc */
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000; /* Đảm bảo khung nằm trên các phần tử khác */
+}
+
+/* Ẩn khung chat khi thu gọn */
+.chat-box.minimized .chat-item {
+    display: none;
+}
+
+/* Biểu tượng thu gọn/mở rộng */
+.toggle-button {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    width: 30px;  /* Thu nhỏ kích thước */
+    height: 30px; /* Thu nhỏ kích thước */
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%; /* Tạo hình tròn */
+    text-align: center;
+    line-height: 30px; /* Đảm bảo dấu +, - nằm giữa */
+    cursor: pointer;
+    font-size: 16px; /* Kích thước chữ phù hợp */
+    border: 2px solid white; /* Thêm viền trắng */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Căn giữa dấu + và - */
+}
+
+/* Biểu tượng trong khung chat */
+.chat-item img {
+    width: 50px; /* Kích thước biểu tượng */
+    height: 50px;
+    cursor: pointer;
+}
+
+/* Khoảng cách giữa các biểu tượng */
+.chat-item {
+    margin: 3px 0; /* Tăng khoảng cách giữa các biểu tượng theo chiều dọc */
+}

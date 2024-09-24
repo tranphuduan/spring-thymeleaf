@@ -7,21 +7,11 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/fontawesome/css/all.min.css}">
     <link rel="stylesheet" th:href="@{/css/templatemo-style.css}">
-
+    <link rel="icon" type="image/png" th:href="@{/img/item/icons.png}">
 </head>
 <body>
 
-<!--<div style="padding-bottom:10px; position: fixed; bottom: 20px; right: 20px; z-index: 1000;">-->
-<!--    <a href="https://oa.zalo.me/262829019064124420" target="_blank">-->
-<!--        <img th:src="@{/img/item/zalo-icon.png}" alt="Zalo" style="width: 50px; height: 50px; cursor: pointer;">-->
-<!--    </a>-->
-<!--</div>-->
-<div style="padding-bottom:10px; position: fixed; bottom: 20px; right: 80px; z-index: 1000;">
-    <a href="https://t.me/hiennd16" target="_blank">
-        <img th:src="@{/img/item/zalo-icon.png}" alt="Telegram" style="width: 50px; height: 50px; cursor: pointer;">
-    </a>
-</div>
-
+<div th:insert="fragments/chat :: chat"></div>
 
 <!-- Import Header -->
 <div th:insert="fragments/header :: header"></div>
@@ -130,7 +120,8 @@
 
 <!-- Import Footer -->
 <div th:insert="fragments/footer :: footer"></div>
-<script src="js/plugins.js"></script>
+<script th:src="@{/js/plugins.js}"></script>
+<script th:src="@{/js/script.js}"></script>
 <script>
     $(window).on("load", function () {
         $('body').addClass('loaded');

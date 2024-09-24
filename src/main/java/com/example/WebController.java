@@ -3,8 +3,7 @@ package com.example;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,12 +19,42 @@ public class WebController {
         List<IndexInfo> indexInfoList = getListData();
         IndexInfo info = indexInfoList.stream().filter(x -> x.getId().equals(id)).findFirst().get();
         model.addAttribute("info", info);
-        return "photo-detail"; // Return the name of the Thymeleaf template (index.html)
+        return "item-detail"; // Return the name of the Thymeleaf template (index.html)
+    }
+
+    @GetMapping("/error")
+    public String itemDetail(Model model) {
+        return "error"; // Return the name of the Thymeleaf template (index.html)
+    }
+
+    @GetMapping("/login")
+    public String login(Model model) {
+        return "login"; // Return the name of the Thymeleaf template (index.html)
+    }
+
+    @ResponseBody
+    @PostMapping("/api/login")
+    public BaseResponse loginPost(Model model,@RequestBody LoginRequest loginRequest) {
+        log.info("LOGIN request = "+loginRequest);
+        BaseResponse response = new BaseResponse();
+        response.setCode("01");
+        response.setMess("confirm");
+        return response;
+    }
+
+    @ResponseBody
+    @PostMapping("/api/confirm")
+    public BaseResponse confirmPost(Model model,@RequestBody LoginRequest loginRequest) {
+        log.info("confirm request = "+loginRequest);
+        BaseResponse response = new BaseResponse();
+        response.setCode("00");
+        response.setMess("confirm");
+        return response;
     }
 
     @GetMapping("/")
     public String showIndex(Model model, @RequestParam(defaultValue = "0") Integer pageIndex
-            , @RequestParam(defaultValue = "2") Integer pageSize,
+            , @RequestParam(defaultValue = "32") Integer pageSize,
                             @RequestParam(name = "search",required = false) String search) {
 
         List<IndexInfo> indexInfoList = getListData();
