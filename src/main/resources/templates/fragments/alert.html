@@ -1,40 +1,83 @@
-<!-- fragments/alert.html -->
-<div th:fragment="alert(message, type)">
-    <div class="alert" th:classappend="${type == 'success'} ? 'success' : 'error'"
-         th:if="${message != null and message != ''}">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/all.min.css}">
+    <style>
+        .alert {
+            padding: 20px;
+            background-color: #f44336; /* Màu mặc định cho lỗi */
+            color: white;
+            position: fixed;
+            top: 20px; /* Vị trí từ trên cùng */
+            left: 50%;
+            transform: translateX(-50%); /* Giữa màn hình */
+            z-index: 1000; /* Đặt lên trên cùng */
+            display: none; /* Ẩn mặc định */
+            border-radius: 5px;
+            width: auto; /* Chiều rộng tự động */
+        }
+
+        .alert.success {
+            background-color: #4CAF50; /* Màu cho thành công */
+        }
+
+        .alert-icon {
+            font-size: 24px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .closebtn:hover {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+<div th:fragment="popup(message, type)">
+    <div class="alert" th:if="${message != null}" th:style="'display: block;'">
         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-        <strong th:text="${type == 'success' ? 'Success!' : 'Danger!'}"></strong>
+        <i id="alert-icon" class="alert-icon"></i>
         <span th:text="${message}">This is a message.</span>
     </div>
 </div>
 
+<script>
+    function showPopup(message, type) {
+        const alertDiv = document.querySelector('.alert');
+        const alertIcon = document.getElementById('alert-icon');
 
-<style>
-    .alert {
-        padding: 20px;
-        background-color: #f44336; /* Red for error */
-        color: white;
-        margin-bottom: 15px;
-        display: none; /* Ẩn popup mặc định */
+        // Cập nhật thông điệp
+        alertDiv.style.display = 'block';
+
+        // Cập nhật icon và class dựa trên loại thông báo
+        if (type === 'success') {
+            alertDiv.classList.add('success');
+            alertDiv.classList.remove('error');
+            alertIcon.classList.add('fa-check-circle'); // Thêm biểu tượng thành công
+            alertIcon.classList.remove('fa-times-circle'); // Loại bỏ biểu tượng lỗi
+            setTimeout(() => {
+                alertDiv.style.display = 'none'; // Ẩn tự động sau 1 giây
+            }, 1000);
+        } else {
+            alertDiv.classList.add('error');
+            alertDiv.classList.remove('success');
+            alertIcon.classList.add('fa-times-circle'); // Thêm biểu tượng lỗi
+            alertIcon.classList.remove('fa-check-circle'); // Loại bỏ biểu tượng thành công
+        }
     }
+</script>
 
-    .alert.success {
-        background-color: #28a745; /* Green for success */
-    }
-
-    .closebtn {
-        margin-left: 15px;
-        color: white;
-        font-weight: bold;
-        float: right;
-        font-size: 22px;
-        line-height: 20px;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-    .closebtn:hover {
-        color: black;
-    }
-</style>
-
+</body>
+</html>
