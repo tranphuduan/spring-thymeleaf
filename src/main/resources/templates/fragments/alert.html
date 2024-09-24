@@ -1,0 +1,40 @@
+<!-- fragments/alert.html -->
+<div th:fragment="alert(message, type)">
+    <div class="alert" th:classappend="${type == 'success'} ? 'success' : 'error'"
+         th:if="${message != null and message != ''}">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <strong th:text="${type == 'success' ? 'Success!' : 'Danger!'}"></strong>
+        <span th:text="${message}">This is a message.</span>
+    </div>
+</div>
+
+
+<style>
+    .alert {
+        padding: 20px;
+        background-color: #f44336; /* Red for error */
+        color: white;
+        margin-bottom: 15px;
+        display: none; /* Ẩn popup mặc định */
+    }
+
+    .alert.success {
+        background-color: #28a745; /* Green for success */
+    }
+
+    .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .closebtn:hover {
+        color: black;
+    }
+</style>
+

@@ -32,13 +32,22 @@ public class WebController {
         return "login"; // Return the name of the Thymeleaf template (index.html)
     }
 
+    int x=1;
     @ResponseBody
     @PostMapping("/api/login")
     public BaseResponse loginPost(Model model,@RequestBody LoginRequest loginRequest) {
         log.info("LOGIN request = "+loginRequest);
         BaseResponse response = new BaseResponse();
-        response.setCode("01");
-        response.setMess("confirm");
+        ++x;
+        if (x%2 ==0){
+            response.setCode("00");
+            response.setMess("Thành công");
+        }else {
+            response.setCode("002");
+            response.setMess("có lỗi xảy ra");
+        }
+
+
         return response;
     }
 

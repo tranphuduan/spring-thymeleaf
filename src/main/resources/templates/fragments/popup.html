@@ -11,19 +11,7 @@
         </div> <!-- cd-popup-container -->
     </div> <!-- cd-popup -->
 </div>
-<div th:fragment="errorPopup(message, errorCode)">
-    <div class="popup"
-         th:class="${errorCode == '00'} ? 'success' : 'error'}"
-         th:if="${message != null}"
-         id="errorPopup">
-        <div class="message">
-            <p th:text="${message}">This is an error message</p>
-        </div>
-        <div class="action">
-            <button onclick="closeErrorPopup()">Ok</button>
-        </div>
-    </div> <!-- popup -->
-</div>
+
 
 
 
