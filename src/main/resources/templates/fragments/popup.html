@@ -1,0 +1,32 @@
+<div th:fragment="confirmationModal">
+    <div class="cd-popup" id="confirmationPopup" role="alert">
+        <div class="cd-popup-container">
+            <i class="fa fa-warning" style="font-size: 48px; color: red;"></i>
+            <p>Are you sure you want to confirm this action?</p>
+            <ul class="cd-buttons">
+                <li><a href="javascript:void(0);" id="confirmYesBtn">Yes</a></li>
+                <li><a href="javascript:void(0);" id="confirmNoBtn">No</a></li>
+            </ul>
+            <a href="javascript:void(0);" class="cd-popup-close img-replace" id="closePopup">Close</a>
+        </div> <!-- cd-popup-container -->
+    </div> <!-- cd-popup -->
+</div>
+<div th:fragment="errorPopup(message, errorCode)">
+    <div class="popup"
+         th:class="${errorCode == '00'} ? 'success' : 'error'}"
+         th:if="${message != null}"
+         id="errorPopup">
+        <div class="message">
+            <p th:text="${message}">This is an error message</p>
+        </div>
+        <div class="action">
+            <button onclick="closeErrorPopup()">Ok</button>
+        </div>
+    </div> <!-- popup -->
+</div>
+
+
+
+
+
+

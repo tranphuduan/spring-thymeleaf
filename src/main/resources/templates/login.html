@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalog-Z Contact page</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/fontawesome/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/css/templatemo-style.css}">
+    <link rel="stylesheet" th:href="@{/css/confirm-style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM1k9xqY0xqVYYzjC52nIc9dTrgAIMfD4kgK" crossorigin="anonymous">
+    <link rel="icon" type="image/png" th:href="@{/img/item/icons.png}">
+    <style>
+        .field-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .form-group {
+            position: relative; /* Để biểu tượng nằm bên trong khung nhập */
+        }
+
+    </style>
+</head>
+<body>
+<div th:insert="fragments/chat :: chat"></div>
+
+<!-- Import Header -->
+<div th:insert="fragments/header :: header"></div>
+
+<!-- Import Popup -->
+<div th:insert="fragments/popup :: confirmationModal"></div>
+
+<div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" data-image-src="img/hero.jpg"></div>
+
+<div class="container-fluid tm-mt-60">
+    <div class="row tm-mb-50">
+        <div class="col-lg-6 col-12 mb-5">
+            <h2 class="tm-text-primary mb-5">Contact Page</h2>
+            <form id="login-form" action="" method="POST" class="tm-contact-form mx-auto">
+                <div class="form-group">
+                    <input type="text" name="username" class="form-control rounded-0" placeholder="username/email" required />
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" id="password" class="form-control rounded-0" placeholder="password" required />
+                    <span id="togglePassword" class="fa fa-fw fa-eye field-icon"></span>
+                </div>
+
+                <!-- Trường mã xác nhận, mặc định ẩn -->
+                <div class="form-group" id="confirm-group" style="display:none;">
+                    <input type="text" name="confirmCode" class="form-control rounded-0" placeholder="Enter confirmation code" />
+                </div>
+
+                <div class="form-group tm-text-right">
+                    <button type="submit" id="sendButton" class="btn btn-primary">Send</button>
+                    <button type="button" id="confirmButton" class="btn btn-secondary" style="display:none;">Confirmation</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Import Footer -->
+<div th:insert="fragments/footer :: footer"></div>
+
+<script th:src="@{/js/plugins.js}"></script>
+<script th:src="@{/js/script.js}"></script>
+<script th:src="@{/js/confirm-js.js}"></script>
+<script>
+    $(window).on("load", function() {
+        $('body').addClass('loaded');
+    });
+
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#password');
+
+    togglePassword.addEventListener('click', function (e) {
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        this.classList.toggle('fa-eye-slash');
+    });
+
+    document.getElementById("login-form").addEventListener("submit", function(e){
+        e.preventDefault(); // Ngăn không reload lại trang
+
+        const username = document.querySelector('input[name="username"]').value;
+        const password = document.querySelector('input[name="password"]').value;
+
+        fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.code === "00") {
+                    alert(data.mess);
+                } else if (data.code === "01") {
+                    // alert(data.mess);
+                    document.getElementById('confirm-group').style.display = 'block';
+                    document.getElementById('sendButton').style.display = 'none';
+                    document.getElementById('confirmButton').style.display = 'inline-block';
+                } else {
+                    // alert(data.mess);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });
+
+
+
+    document.getElementById("confirmYesBtn").addEventListener("click", function(){
+        const confirmCode = document.querySelector('input[name="confirmCode"]').value;
+
+        if (confirmCode.trim() === "") {
+            alert("Please enter the confirmation code.");
+            return;
+        }
+
+        const username = document.querySelector('input[name="username"]').value;
+        const password = document.querySelector('input[name="password"]').value;
+
+        fetch('/api/confirm', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password,
+                confirmCode: confirmCode
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.code === "00") {
+                    window.location.href = "/";
+                } else {
+                    alert(data.mess);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+
+        // Đóng popup sau khi gửi mã confirm
+        document.getElementById("confirmationPopup").classList.remove("is-visible");
+    });
+
+</script>
+
+</body>
+
+
+</html>

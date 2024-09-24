@@ -1,0 +1,118 @@
+.cd-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(68, 65, 65, 0.8);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s 0s, visibility 0s 0.3s;
+    z-index: 9999;
+}
+
+.cd-popup.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s 0s, visibility 0s 0s;
+}
+
+.cd-popup-container {
+    position: relative;
+    width: 90%;
+    max-width: 400px;
+    margin: 100px auto;
+    background: #ffffff;
+    padding: 2em;
+    border-radius: 0.25em;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-40px);
+    transition-property: transform;
+    transition-duration: 0.3s;
+}
+
+.cd-popup-container p {
+    margin: 0 0 2em;
+    color: #333;
+    font-size: 1.2em;
+}
+
+.cd-buttons {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.cd-buttons li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.cd-buttons li:last-child {
+    margin-right: 0;
+}
+
+.cd-buttons a {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 0.25em;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transform: scale(1);
+}
+
+/* Nút Yes màu xanh lá cây (giống success) */
+.cd-buttons a#confirmYesBtn {
+    background-color: #28a745; /* Xanh lá */
+}
+
+/* Nút No màu đỏ */
+.cd-buttons a#confirmNoBtn {
+    background-color: #dc3545; /* Đỏ */
+}
+
+/* Hiệu ứng hover khi di chuột vào nút */
+.cd-buttons a:hover {
+    border-color: white; /* Viền sáng khi hover */
+    box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.5); /* Tạo hiệu ứng sáng viền */
+    transform: scale(1.05); /* Tăng kích thước nhẹ khi hover */
+}
+
+/* Hiệu ứng click vào nút Yes (phóng to nhẹ) */
+.cd-buttons a#confirmYesBtn:active {
+    transform: scale(1.1); /* Phóng to khi click */
+    box-shadow: 0 0 20px 8px rgba(40, 167, 69, 0.7); /* Viền xanh sáng */
+}
+
+/* Hiệu ứng click vào nút No (nhỏ lại nhẹ) */
+.cd-buttons a#confirmNoBtn:active {
+    transform: scale(0.95); /* Thu nhỏ khi click */
+    box-shadow: 0 0 20px 8px rgba(220, 53, 69, 0.7); /* Viền đỏ sáng */
+}
+
+/* Nút đóng popup */
+.cd-popup-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    text-indent: 100%;
+    white-space: nowrap;
+    background: url('https://cdn-icons-png.flaticon.com/512/61/61155.png') no-repeat center center;
+    background-size: 24px;
+}
+
+.cd-popup-close:hover {
+    background-color: #ddd;
+}
+
+.is-visible .cd-popup-container {
+    transform: translateY(0);
+}

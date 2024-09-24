@@ -1,0 +1,21 @@
+<!-- header.html -->
+<div th:fragment="chat">
+    <!-- Khung chứa biểu tượng chat -->
+    <div id="chatBox" class="chat-box">
+        <!-- Nút thu gọn/mở rộng bên trong khung -->
+        <div id="toggleButton" class="toggle-button">-</div>
+
+        <div class="chat-item">
+            <a href="https://zalo.me/your_zalo_id" target="_blank">
+                <img th:src="@{/img/item/zalo-icon.png}" alt="Zalo">
+            </a>
+        </div>
+        <div class="chat-item">
+            <a href="https://t.me/your_telegram_username" target="_blank">
+                <img th:src="@{/img/item/telegram-icon.png}" alt="Telegram">
+            </a>
+        </div>
+    </div>
+</div>
+
+
