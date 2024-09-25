@@ -30,6 +30,7 @@ public class WebController {
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("page", "login");
+//        model.addAttribute("userInfo", userInfo);
         return "login"; // Return the name of the Thymeleaf template (index.html)
     }
 
@@ -50,10 +51,9 @@ public class WebController {
             response.setCode("002");
             response.setMess("có lỗi xảy ra");
         }
-
-
         return response;
     }
+
 
     @ResponseBody
     @PostMapping("/api/confirm")

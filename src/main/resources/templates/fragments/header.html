@@ -8,28 +8,40 @@
         <div class="loader-section section-right"></div>
 
     </div>
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-film mr-2"></i>
-                Catalog-Z
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <!-- Nếu trang hiện tại là 'Home', thêm lớp 'active' -->
-                        <a class="nav-link nav-link-1" th:classappend="${page == 'home'} ? 'active'" th:href="@{/?pageIndex=0&pageSize=16}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <!-- Nếu trang hiện tại là 'Login', thêm lớp 'active' -->
-                        <a class="nav-link nav-link-2" th:classappend="${page == 'login'} ? 'active'" th:href="@{/login}">Login</a>
-                    </li>
-                </ul>
-            </div>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <i class="fas fa-film mr-2"></i>
+            Catalog-Z
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                <!-- Kiểm tra nếu userInfo là null thì hiển thị nút đăng nhập -->
+                <li class="nav-item" th:if="${userInfo == null}">
+                    <a class="nav-link" th:href="@{/login}">Login</a>
+                </li>
+
+                <!-- Ngược lại nếu userInfo không null thì hiển thị thông tin người dùng -->
+                <li class="nav-item dropdown" th:if="${userInfo != null}">
+                    <!-- Hình đại diện và tên người dùng -->
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img th:src="@{/images/user_avatar.png}" alt="User Avatar" class="rounded-circle" width="30" height="30">
+                        <span th:text="${userInfo.username}"></span> <!-- Hiển thị tên người dùng -->
+                    </a>
+
+                    <!-- Menu dropdown -->
+                    <div class="dropdown-menu" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" th:href="@{/user/profile}">Thông tin chi tiết</a>
+                        <a class="dropdown-item" th:href="@{/user/change-password}">Đổi mật khẩu</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" th:href="@{/logout}">Đăng xuất</a>
+                    </div>
+                </li>
+            </ul>
         </div>
-    </nav>
+    </div>
+
 
 </div>
