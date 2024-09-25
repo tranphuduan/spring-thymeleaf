@@ -39,7 +39,10 @@ public class WebController {
         log.info("LOGIN request = "+loginRequest);
         BaseResponse response = new BaseResponse();
         ++x;
-        if (x%2 ==0){
+        if (x%5==0){
+            response.setCode("01");
+            response.setMess("Thành công");
+        }else  if (x%2 ==0){
             response.setCode("00");
             response.setMess("Thành công");
         }else {

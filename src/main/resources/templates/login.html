@@ -8,7 +8,7 @@
     <link rel="stylesheet" th:href="@{/fontawesome/css/all.min.css}">
     <link rel="stylesheet" th:href="@{/css/templatemo-style.css}">
     <link rel="stylesheet" th:href="@{/css/confirm-style.css}">
-    <link rel="stylesheet" th:href="@{/css/all.min.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM1k9xqY0xqVYYzjC52nIc9dTrgAIMfD4kgK" crossorigin="anonymous">
     <link rel="icon" type="image/png" th:href="@{/img/item/icons.png}">
     <style>
         .field-icon {
@@ -128,9 +128,9 @@
 <!-- Popup chung cho cả success và error -->
 <div id="alertPopup" class="alert" style="display:none;">
     <span class="closebtn" onclick="closePopup()">&times;</span>
-    <strong class="popup-title"></strong>
     <span class="popup-message">This is a message.</span>
 </div>
+
 
 
 
@@ -173,35 +173,30 @@
         })
             .then(response => response.json())
             .then(data => {
-                if (data.code === "00") {
-                    // Hiển thị thông báo thành công
-                    showPopup('Success', data.mess, 'success');
-                } else if (data.code === "01") {
+                if (data.code === "01") {
                     // Xử lý logic cho code 01
                     document.getElementById('confirm-group').style.display = 'block';
                     document.getElementById('sendButton').style.display = 'none';
                     document.getElementById('confirmButton').style.display = 'inline-block';
-                } else {
-                    // Hiển thị popup thông báo lỗi
-                    showPopup('Error', data.mess, 'error');
+                }else {
+                    showPopup(data.code, data.mess);
                 }
             })
             .catch(error => console.error('Error:', error));
     });
 
-    function showPopup(title, message, type) {
+    function showPopup(code, message) {
         const overlay = document.getElementById('overlay'); // Lớp nền overlay
         const popup = document.getElementById('alertPopup'); // Popup
-        const popupTitle = popup.querySelector('.popup-title'); // Tiêu đề popup
         const popupMessage = popup.querySelector('.popup-message'); // Nội dung popup
 
         // Cập nhật nội dung popup
-        popupTitle.textContent = title || (type === 'success' ? 'Success!' : 'Error!');
         popupMessage.textContent = message;
 
         // Xóa các class cũ và thêm class mới (success hoặc error)
         popup.classList.remove('success', 'error');
-        if (type === 'success') {
+        if (code === "00") {
+            // Hiển thị thành công nếu code là "00"
             popup.classList.add('success');
             overlay.style.display = 'none'; // Không hiện overlay cho success
             popup.style.display = 'block'; // Hiển thị popup
@@ -211,6 +206,7 @@
                 popup.style.display = 'none';
             }, 1000);
         } else {
+            // Hiển thị lỗi nếu code khác "00"
             popup.classList.add('error');
             overlay.style.display = 'block'; // Hiện overlay cho error
             popup.style.display = 'block'; // Hiển thị popup
