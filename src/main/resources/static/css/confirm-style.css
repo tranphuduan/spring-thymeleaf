@@ -56,7 +56,7 @@
 .cd-buttons a {
     display: inline-block;
     padding: 10px 20px;
-    border-radius: 0.25em;
+    /*border-radius: 0.25em;*/
     color: white;
     text-decoration: none;
     font-weight: bold;
@@ -68,12 +68,12 @@
 
 /* Nút Yes màu xanh lá cây (giống success) */
 .cd-buttons a#confirmYesBtn {
-    background-color: #28a745; /* Xanh lá */
+    background-color: #68e884; /* Xanh lá */
 }
 
 /* Nút No màu đỏ */
 .cd-buttons a#confirmNoBtn {
-    background-color: #dc3545; /* Đỏ */
+    background-color: #ea4858; /* Đỏ */
 }
 
 /* Hiệu ứng hover khi di chuột vào nút */
@@ -117,10 +117,43 @@
     transform: translateY(0);
 }
 .popup-title {
-    color: white; /* Màu chữ trắng */
-    background-color: red; /* Màu nền đỏ */
+    color: #fc0000; /* Màu chữ trắng */
+    /*background-color: #ef5e5e; !* Màu nền đỏ *!*/
     padding: 10px;
-    font-size: 1.5em;
+    font-size: 30px;
     font-weight: bold;
     margin-bottom: 20px;
 }
+.popup-header {
+    display: flex; /* Sử dụng flexbox để căn 2 phần tử nằm ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    /*gap: 10px; !* Tạo khoảng cách giữa icon và tiêu đề *!*/
+}
+
+.popup-title {
+    margin: 0; /* Loại bỏ margin mặc định của tiêu đề */
+    font-size: 1.5em; /* Điều chỉnh font-size nếu cần */
+}
+
+.cd-buttons {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex; /* Sử dụng flexbox để sắp xếp các nút theo hàng ngang */
+    justify-content: space-between; /* Căn đều khoảng cách giữa các nút */
+}
+
+.cd-buttons li {
+    flex: 1; /* Mỗi nút sẽ chiếm đều không gian còn lại */
+    margin-right: 0; /* Xóa khoảng cách giữa các phần tử li */
+}
+
+.cd-buttons a {
+    display: block; /* Đảm bảo nút chiếm toàn bộ không gian của li */
+    width: 100%; /* Nút chiếm toàn bộ chiều rộng của li */
+    padding: 10px 0; /* Điều chỉnh padding để nút có chiều cao hợp lý */
+    text-align: center; /* Căn giữa chữ trong nút */
+}
+
+/* Các thay đổi còn lại vẫn giữ nguyên */
