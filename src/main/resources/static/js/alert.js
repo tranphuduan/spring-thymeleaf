@@ -11,19 +11,20 @@ function showPopup(code, message) {
     if (code === "00") {
         // Hiển thị thành công nếu code là "00"
         popup.classList.add('success');
-        overlay.style.display = 'none'; // Không hiện overlay cho success
-        popup.style.display = 'block'; // Hiển thị popup
-
-        // Tự động ẩn popup sau 1 giây
-        setTimeout(() => {
-            popup.style.display = 'none';
-        }, 1000);
+        console.log("00");
     } else {
         // Hiển thị lỗi nếu code khác "00"
         popup.classList.add('error');
-        overlay.style.display = 'block'; // Hiện overlay cho error
-        popup.style.display = 'block'; // Hiển thị popup
+        // overlay.style.display = 'block'; // Hiện overlay cho error
+        // popup.style.display = 'block'; // Hiển thị popup
     }
+    overlay.style.display = 'none'; // Không hiện overlay cho success
+    popup.style.display = 'block'; // Hiển thị popup
+
+    // Tự động ẩn popup sau 1 giây
+    setTimeout(() => {
+        popup.style.display = 'none';
+    }, 1000);
 }
 
 function closePopup() {

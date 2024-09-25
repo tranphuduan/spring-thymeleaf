@@ -1,20 +1,20 @@
 <div th:fragment="confirmationModal">
     <div class="cd-popup" id="confirmationPopup" role="alert">
         <div class="cd-popup-container">
-            <i class="fa fa-warning" style="font-size: 48px; color: red;"></i>
+            <!-- Tiêu đề cảnh báo -->
+            <h2 class="popup-title">Cảnh báo</h2>
             <p>Xác nhận thay đổi !!!</p>
             <ul class="cd-buttons">
                 <li><a href="javascript:void(0);" id="confirmYesBtn">Yes</a></li>
-                <li><a href="javascript:void(0);" id="confirmNoBtn">No</a></li>
+                <li><a href="javascript:void(0);" id="confirmNoBtn">Cancel</a></li>
             </ul>
             <a href="javascript:void(0);" class="cd-popup-close img-replace" id="closePopup">Close</a>
         </div> <!-- cd-popup-container -->
-    </div> <!-- cd-popup -->
+    </div>
 </div>
 
 
 <div th:fragment="alert">
-    <!-- Popup chung cho cả success và error -->
     <div id="alertPopup" class="alert" style="display:none;">
         <span class="closebtn" onclick="closePopup()">&times;</span>
         <span class="popup-message">This is a message.</span>

@@ -36,6 +36,11 @@
 <div th:insert="fragments/popup :: confirmationModal"></div>
 <div th:insert="fragments/popup :: alert"></div>
 
+<!--<div id="alertPopup" class="alert" style="display:none;">-->
+<!--    <span class="closebtn" onclick="closePopup()">&times;</span>-->
+<!--    <span class="popup-message">This is a message.</span>-->
+<!--</div>-->
+
 <div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" data-image-src="img/hero.jpg"></div>
 
 <div class="container-fluid tm-mt-60">
@@ -67,6 +72,8 @@
 
 <!-- Overlay chỉ hiện khi có lỗi -->
 <div id="overlay" class="overlay" style="display:none;"></div>
+
+
 
 <!-- Import Footer -->
 <div th:insert="fragments/footer :: footer"></div>
