@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/fontawesome/css/all.min.css}">
     <link rel="stylesheet" th:href="@{/css/templatemo-style.css}">
     <link rel="stylesheet" th:href="@{/css/confirm-style.css}">
+    <link rel="stylesheet" th:href="@{/css/alert.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM1k9xqY0xqVYYzjC52nIc9dTrgAIMfD4kgK" crossorigin="anonymous">
     <link rel="icon" type="image/png" th:href="@{/img/item/icons.png}">
     <style>
@@ -24,65 +25,6 @@
         }
 
     </style>
-    <style>
-        /* Popup mặc định, đặt tại top-center */
-        .alert {
-            padding: 15px;
-            background-color: #f44336; /* Red for error */
-            color: white;
-            display: none;
-            position: fixed;
-            top: 20px; /* Đặt vị trí cách trên cùng 20px */
-            left: 50%;
-            transform: translateX(-50%); /* Canh giữa theo trục X */
-            width: auto;
-            max-width: 400px;
-            z-index: 1000;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            text-align: center;
-        }
-
-        /* Success popup background */
-        .alert.success {
-            background-color: #4CAF50; /* Green for success */
-        }
-
-        /* Error popup background */
-        .alert.error {
-            background-color: #f44336; /* Red for error */
-        }
-
-        /* Close button */
-        .closebtn {
-            margin-left: 15px;
-            color: white;
-            font-weight: bold;
-            float: right;
-            font-size: 18px;
-            line-height: 20px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .closebtn:hover {
-            color: black;
-        }
-
-        /* Overlay để làm tối nền, chỉ hiện cho error */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7); /* Màn hình tối */
-            z-index: 999;
-            display: none;
-        }
-
-
-    </style>
 </head>
 <body>
 <div th:insert="fragments/chat :: chat"></div>
@@ -92,6 +34,7 @@
 
 <!-- Import Popup -->
 <div th:insert="fragments/popup :: confirmationModal"></div>
+<div th:insert="fragments/popup :: alert"></div>
 
 <div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" data-image-src="img/hero.jpg"></div>
 
@@ -125,22 +68,14 @@
 <!-- Overlay chỉ hiện khi có lỗi -->
 <div id="overlay" class="overlay" style="display:none;"></div>
 
-<!-- Popup chung cho cả success và error -->
-<div id="alertPopup" class="alert" style="display:none;">
-    <span class="closebtn" onclick="closePopup()">&times;</span>
-    <span class="popup-message">This is a message.</span>
-</div>
-
-
-
-
-
 <!-- Import Footer -->
 <div th:insert="fragments/footer :: footer"></div>
 
 <script th:src="@{/js/plugins.js}"></script>
 <script th:src="@{/js/script.js}"></script>
 <script th:src="@{/js/confirm-js.js}"></script>
+<script th:src="@{/js/alert.js}"></script>
+<script th:src="@{/js/login.js}"></script>
 <script>
     $(window).on("load", function() {
         $('body').addClass('loaded');
@@ -154,116 +89,6 @@
         password.setAttribute('type', type);
         this.classList.toggle('fa-eye-slash');
     });
-
-    document.getElementById("login-form").addEventListener("submit", function(e) {
-        e.preventDefault(); // Ngăn không reload lại trang
-
-        const username = document.querySelector('input[name="username"]').value;
-        const password = document.querySelector('input[name="password"]').value;
-
-        fetch('/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                username: username,
-                password: password
-            })
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.code === "01") {
-                    // Xử lý logic cho code 01
-                    document.getElementById('confirm-group').style.display = 'block';
-                    document.getElementById('sendButton').style.display = 'none';
-                    document.getElementById('confirmButton').style.display = 'inline-block';
-                }else {
-                    showPopup(data.code, data.mess);
-                }
-            })
-            .catch(error => console.error('Error:', error));
-    });
-
-    function showPopup(code, message) {
-        const overlay = document.getElementById('overlay'); // Lớp nền overlay
-        const popup = document.getElementById('alertPopup'); // Popup
-        const popupMessage = popup.querySelector('.popup-message'); // Nội dung popup
-
-        // Cập nhật nội dung popup
-        popupMessage.textContent = message;
-
-        // Xóa các class cũ và thêm class mới (success hoặc error)
-        popup.classList.remove('success', 'error');
-        if (code === "00") {
-            // Hiển thị thành công nếu code là "00"
-            popup.classList.add('success');
-            overlay.style.display = 'none'; // Không hiện overlay cho success
-            popup.style.display = 'block'; // Hiển thị popup
-
-            // Tự động ẩn popup sau 1 giây
-            setTimeout(() => {
-                popup.style.display = 'none';
-            }, 1000);
-        } else {
-            // Hiển thị lỗi nếu code khác "00"
-            popup.classList.add('error');
-            overlay.style.display = 'block'; // Hiện overlay cho error
-            popup.style.display = 'block'; // Hiển thị popup
-        }
-    }
-
-    function closePopup() {
-        const overlay = document.getElementById('overlay');
-        const popup = document.getElementById('alertPopup');
-
-        // Ẩn popup và overlay
-        overlay.style.display = 'none';
-        popup.style.display = 'none';
-    }
-
-
-
-
-
-
-
-    document.getElementById("confirmYesBtn").addEventListener("click", function(){
-        const confirmCode = document.querySelector('input[name="confirmCode"]').value;
-
-        if (confirmCode.trim() === "") {
-            alert("Please enter the confirmation code.");
-            return;
-        }
-
-        const username = document.querySelector('input[name="username"]').value;
-        const password = document.querySelector('input[name="password"]').value;
-
-        fetch('/api/confirm', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                username: username,
-                password: password,
-                confirmCode: confirmCode
-            })
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.code === "00") {
-                    window.location.href = "/";
-                } else {
-                    alert(data.mess);
-                }
-            })
-            .catch(error => console.error('Error:', error));
-
-        // Đóng popup sau khi gửi mã confirm
-        document.getElementById("confirmationPopup").classList.remove("is-visible");
-    });
-
 </script>
 
 </body>
