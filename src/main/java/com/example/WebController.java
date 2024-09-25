@@ -29,6 +29,7 @@ public class WebController {
 
     @GetMapping("/login")
     public String login(Model model) {
+        model.addAttribute("page", "login");
         return "login"; // Return the name of the Thymeleaf template (index.html)
     }
 
@@ -95,7 +96,7 @@ public class WebController {
 
         model.addAttribute("searchResponse", response);
         model.addAttribute("search", search==null?"":search);
-
+        model.addAttribute("page", "home");
         return "index"; // Return the name of the Thymeleaf template (index.html)
     }
 

@@ -225,25 +225,15 @@ a.tm-text-primary:hover { color:#666666; }
     font-size: 1.2rem;
 }
 
-.nav-link-1.active,
-.nav-link-1:hover {
+.nav-link.active {
     border-color: #33CCFF;
 }
 
-.nav-link-2.active,
-.nav-link-2:hover {
+
+.nav-link:hover {
     border-color: #FF6666;
 }
 
-.nav-link-3.active,
-.nav-link-3:hover {
-    border-color: #33CC66;
-}
-
-.nav-link-4.active,
-.nav-link-4:hover {
-    border-color: #CC66CC;
-}
 
 .tm-search-input {
     width: 360px;
