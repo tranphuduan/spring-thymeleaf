@@ -1,4 +1,4 @@
-package com.example;
+package com.base.model.response;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -10,12 +10,10 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-public class SearchResponse {
+public class SearchResponse<T> {
     Integer totalData;
     Integer pageIndex;
     Integer pageSize;
     Integer totalPage;
-    List<IndexInfo> info;
-
-
+    T info;
 }
