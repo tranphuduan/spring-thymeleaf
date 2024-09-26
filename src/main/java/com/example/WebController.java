@@ -35,6 +35,7 @@ public class WebController {
     }
 
     int x=1;
+    boolean checkUser = false;
     @ResponseBody
     @PostMapping("/api/login")
     public BaseResponse loginPost(Model model,@RequestBody LoginRequest loginRequest) {
@@ -44,12 +45,15 @@ public class WebController {
         if (x%5==0){
             response.setCode("01");
             response.setMess("Thành công");
+            checkUser =true;
         }else  if (x%2 ==0){
             response.setCode("00");
             response.setMess("Thành công");
+            checkUser =true;
         }else {
             response.setCode("002");
             response.setMess("có lỗi xảy ra");
+            checkUser =false;
         }
         return response;
     }
@@ -97,6 +101,10 @@ public class WebController {
         model.addAttribute("searchResponse", response);
         model.addAttribute("search", search==null?"":search);
         model.addAttribute("page", "home");
+        if (checkUser){
+            TokenInfo userInfo = new TokenInfo("duantp","Tran Phu Duan","Barial xxxx","xxxx");
+            model.addAttribute("userInfo", userInfo);
+        }
         return "index"; // Return the name of the Thymeleaf template (index.html)
     }
 

@@ -670,35 +670,37 @@ select:not([multiple]) {
     cursor: pointer;
 }
 
-/* Khoảng cách giữa các biểu tượng */
+/* Khoảng cách giữa các biểu tượng chat */
 .chat-item {
     margin: 3px 0; /* Tăng khoảng cách giữa các biểu tượng theo chiều dọc */
 }
 
-/* Style cho hình đại diện */
+
+/* Định dạng avatar */
 .nav-link img {
     border-radius: 50%;
     margin-right: 5px;
 }
 
-/* Style cho dropdown menu */
+/* Định dạng dropdown menu */
 .dropdown-menu a {
     color: black;
     text-decoration: none;
-    transition: background-color 0.3s ease;
 }
 
-/* Hiệu ứng hover cho các mục trong dropdown */
+/* Hover cho các mục trong dropdown */
 .dropdown-menu a:hover {
     background-color: #f1f1f1;
 }
 
-/* Hiệu ứng khi hover vào avatar hoặc tên người dùng */
+/* Định dạng avatar và tên người dùng */
 .nav-link:hover {
     color: #007bff;
 }
 
-/* Style cho nút đăng nhập */
+/* Định dạng cho nút Home và Login */
 .nav-link {
     font-weight: bold;
 }
+
+
