@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hệ thống bán hàng</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/fontawesome/css/all.min.css}">
-    <link rel="stylesheet" th:href="@{/css/templatemo-style.css}">
-    <link rel="icon" type="image/png" th:href="@{/img/item/icons.png}">
+    <link rel="stylesheet" th:href="@{/client/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/client/fontawesome/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/client/css/templatemo-style.css}">
+    <link rel="icon" type="image/png" th:href="@{/client/img/item/icons.png}">
 </head>
 <body>
 
@@ -16,7 +16,7 @@
 <!-- Import Header -->
 <div th:insert="fragments/header :: header"></div>
 
-<div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" th:data-image-src="@{/img/hero.jpg}">
+<div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" th:data-image-src="@{/client/img/hero.jpg}">
     <form class="d-flex tm-search-form" onsubmit="return searchSubmit();">
         <input id="searchInput" class="form-control tm-search-input" type="search" placeholder="Search"
                aria-label="Search" th:value="${search != null ? search : ''}">
@@ -120,8 +120,8 @@
 
 <!-- Import Footer -->
 <div th:insert="fragments/footer :: footer"></div>
-<script th:src="@{/js/plugins.js}"></script>
-<script th:src="@{/js/script.js}"></script>
+<script th:src="@{/client/js/plugins.js}"></script>
+<script th:src="@{/client/js/script.js}"></script>
 <script>
     $(window).on("load", function () {
         $('body').addClass('loaded');
