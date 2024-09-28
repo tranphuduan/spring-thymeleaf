@@ -1,4 +1,4 @@
-package com.example;
+package com.example.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,5 +10,4 @@ public class LoginRequest {
     private String password;
     private String confirmCode;
 
-    // Getters and setters
 }

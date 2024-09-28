@@ -4,7 +4,7 @@ document.getElementById("login-form").addEventListener("submit", function(e) {
     const username = document.querySelector('input[name="username"]').value;
     const password = document.querySelector('input[name="password"]').value;
 
-    fetch('/api/login', {
+    fetch('/auth/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ document.getElementById("confirmYesBtn").addEventListener("click", function(){
     const username = document.querySelector('input[name="username"]').value;
     const password = document.querySelector('input[name="password"]').value;
 
-    fetch('/api/confirm', {
+    fetch('/auth/confirm', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ document.getElementById("confirmYesBtn").addEventListener("click", function(){
         .then(response => response.json())
         .then(data => {
             if (data.code === "00") {
-                window.location.href = "/";
+                window.location.href = "/home";
             } else {
                 alert(data.mess);
             }

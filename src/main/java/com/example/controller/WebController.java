@@ -1,5 +1,10 @@
-package com.example;
+package com.example.controller;
 
+import com.example.*;
+import com.example.dto.request.LoginRequest;
+import com.example.dto.response.BaseResponse;
+import com.example.dto.response.SearchResponse;
+import com.example.dto.response.UserInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +18,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class WebController {
 
-    @GetMapping("/item-detail")
+    @GetMapping("/home/item-detail")
     public String itemDetail(Model model, @RequestParam(defaultValue = "id") String id) {
 
         List<IndexInfo> indexInfoList = getListData();
@@ -27,7 +32,7 @@ public class WebController {
         return "error"; // Return the name of the Thymeleaf template (index.html)
     }
 
-    @GetMapping("/login")
+    @GetMapping("/auth/login")
     public String login(Model model) {
         model.addAttribute("page", "login");
 //        model.addAttribute("userInfo", userInfo);
@@ -37,8 +42,8 @@ public class WebController {
     int x=1;
     boolean checkUser = false;
     @ResponseBody
-    @PostMapping("/api/login")
-    public BaseResponse loginPost(Model model,@RequestBody LoginRequest loginRequest) {
+    @PostMapping("/auth/login")
+    public BaseResponse loginPost(Model model, @RequestBody LoginRequest loginRequest) {
         log.info("LOGIN request = "+loginRequest);
         BaseResponse response = new BaseResponse();
         ++x;
@@ -60,7 +65,7 @@ public class WebController {
 
 
     @ResponseBody
-    @PostMapping("/api/confirm")
+    @PostMapping("/auth/confirm")
     public BaseResponse confirmPost(Model model,@RequestBody LoginRequest loginRequest) {
         log.info("confirm request = "+loginRequest);
         BaseResponse response = new BaseResponse();
@@ -69,7 +74,7 @@ public class WebController {
         return response;
     }
 
-    @GetMapping("/")
+    @GetMapping("/home")
     public String showIndex(Model model, @RequestParam(defaultValue = "0") Integer pageIndex
             , @RequestParam(defaultValue = "32") Integer pageSize,
                             @RequestParam(name = "search",required = false) String search) {
@@ -101,26 +106,9 @@ public class WebController {
         model.addAttribute("searchResponse", response);
         model.addAttribute("search", search==null?"":search);
         model.addAttribute("page", "home");
-        if (checkUser){
-            TokenInfo userInfo = new TokenInfo("duantp","Tran Phu Duan","Barial xxxx","xxxx");
-            model.addAttribute("userInfo", userInfo);
-        }
+
         return "index"; // Return the name of the Thymeleaf template (index.html)
     }
-
-
-//    @GetMapping("/search")
-//    public String search(@RequestParam("query") String query, Model model) {
-//        // Thực hiện tìm kiếm dựa trên query
-//        // Bạn có thể gọi hàm index ở đây và truyền thêm các thông tin cần thiết
-//
-//        // Ví dụ:
-//        List<IndexInfo> searchResults = searchService.searchByQuery(query); // Giả sử có service tìm kiếm
-//
-//        // Thêm kết quả tìm kiếm vào model
-//        model.addAttribute("searchResults", searchResults);
-//        return "index"; // Trả về template index.html
-//    }
 
 
     public List<IndexInfo> getListData() {

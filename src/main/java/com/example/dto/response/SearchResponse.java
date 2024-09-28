@@ -1,5 +1,6 @@
-package com.example;
+package com.example.dto.response;
 
+import com.example.IndexInfo;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

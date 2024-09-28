@@ -43,7 +43,7 @@
         <div th:each="info : ${searchResponse.info}" class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
             <figure class="effect-ming tm-video-item">
                 <!-- Sửa liên kết ảnh để khi click vào gọi API item-detail -->
-                <a th:href="@{/item-detail(id=${info.id})}">
+                <a th:href="@{/home/item-detail(id=${info.id})}">
                     <img th:src="@{${info.imageName}}" alt="Image" class="img-fluid">
                     <figcaption class="d-flex align-items-center justify-content-center">
                         <h2 th:text="${info.title}">Title</h2>
@@ -136,13 +136,13 @@
 
     function loadPage(pageIndex, pageSize) {
         var searchValue = getSearchValue(); // Lấy giá trị tìm kiếm hiện tại
-        var url = `?pageIndex=${pageIndex}&pageSize=${pageSize}&search=${encodeURIComponent(searchValue)}`;
+        var url = `home?pageIndex=${pageIndex}&pageSize=${pageSize}&search=${encodeURIComponent(searchValue)}`;
         window.location.href = url; // Điều hướng đến URL với các tham số
     }
 
     function searchSubmit() {
         var searchValue = getSearchValue();
-        var url = `?pageIndex=0&pageSize=10&search=${encodeURIComponent(searchValue)}`;
+        var url = `home?pageIndex=0&pageSize=10&search=${encodeURIComponent(searchValue)}`;
         window.location.href = url;
         return false; // Ngăn chặn form submit mặc định
     }
